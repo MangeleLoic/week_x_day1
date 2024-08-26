@@ -10,6 +10,18 @@ class AddComment extends Component {
     },
   }
 
+  
+  componentDidUpdate(prevProps) {
+    if (prevProps.asin !== this.props.asin) {
+      this.setState({
+        comment: {
+          ...this.state.comment,
+          elementId: this.props.asin,
+        },
+      })
+    }
+  }
+
   sendComment = async (e) => {
     e.preventDefault()
     try {
@@ -20,7 +32,8 @@ class AddComment extends Component {
           body: JSON.stringify(this.state.comment),
           headers: {
             'Content-type': 'application/json',
-            Authorization: 'Bearer inserisci-qui-il-tuo-token',
+            Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmNjN2IwMWZkZWUzZDAwMTU5YmRlZjgiLCJpYXQiOjE3MjQ2NzY4NjUsImV4cCI6MTcyNTg4NjQ2NX0.OnWKaApxKcI6Ro144As_C3vXAlNdljjDcXsiQq-UvcA",
           },
         }
       )
@@ -30,14 +43,14 @@ class AddComment extends Component {
           comment: {
             comment: '',
             rate: 1,
-            elementId: this.props.asin,
+            elementId: this.props.asin, 
           },
         })
       } else {
-        throw new Error('Qualcosa è andato storto')
+        throw new Error('Qualcosa è andato storto durante l\'invio della recensione')
       }
     } catch (error) {
-      alert(error)
+      alert(error.message)
     }
   }
 
@@ -70,16 +83,16 @@ class AddComment extends Component {
                 this.setState({
                   comment: {
                     ...this.state.comment,
-                    rate: e.target.value,
+                    rate: parseInt(e.target.value), 
                   },
                 })
               }
             >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
             </Form.Control>
           </Form.Group>
           <Button variant="primary" type="submit">
