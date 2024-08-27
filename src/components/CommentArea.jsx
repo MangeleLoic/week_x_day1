@@ -48,6 +48,7 @@ class CommentArea extends Component {
       this.fetchComments()
     }
   }
+  
 
   render() {
     return (

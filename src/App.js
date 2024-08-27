@@ -8,36 +8,30 @@ import BookList from './components/BookList';
 import CommentArea from './components/CommentArea';
 
 import fantasy from './data/fantasy.json';
-import React, { Component } from 'react';
 
-class App extends Component {
-  state = {
-    selectedBookAsin: null,
-  };
 
-  setSelectedBookAsin = (asin) => {
-    this.setState({ selectedBookAsin: asin });
-  };
+import React, { useState } from 'react';
 
-  render() {
-    return (
-      <>
-        <MyNav />
-        <Container>
-          <Welcome />
-          <Row>
-            <Col md={8}>
-              <BookList books={fantasy} onBookSelect={this.setSelectedBookAsin} />
-            </Col>
-            <Col md={4}>
-              <CommentArea asin={this.state.selectedBookAsin} />
-            </Col>
-          </Row>
-        </Container>
-        <MyFooter />
-      </>
-    );
-  }
-}
+const App = () => {
+  const [selectedBookAsin, setSelectedBookAsin] = useState(null);
+
+  return (
+    <>
+      <MyNav />
+      <Container>
+        <Welcome />
+        <Row>
+          <Col md={8}>
+            <BookList books={fantasy} onBookSelect={setSelectedBookAsin} />
+          </Col>
+          <Col md={4}>
+            <CommentArea asin={selectedBookAsin} />
+          </Col>
+        </Row>
+      </Container>
+      <MyFooter />
+    </>
+  );
+};
 
 export default App;
